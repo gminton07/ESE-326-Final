@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage{caption}
+\usepackage{caption, float, graphicx}
 \usepackage[dvipsnames]{xcolor}
 \captionsetup[table]{skip=1em}
 
@@ -16,6 +16,12 @@
 \color{Aquamarine}
 % Do subplots for petal/ sepal lengths/ widths
 Caption: Plots color-coded for each of the 3 species.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.5\textwidth]{petal_length.png}
+	\caption{Petal lengths of each species}
+\end{figure}
 
 \section{Inference Analysis}
 
