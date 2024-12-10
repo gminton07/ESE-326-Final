@@ -28,14 +28,17 @@ virginica.petal.width = virginica$petal.width
 
 #plot(setosa)
 #plot(setosa$petal.length, setosa$petal.width)
+# Colors:
+# Setosa  Versicolor  Virginica
+# Blue    Green       Red
 
 # PLOTS:
 # Plot sepal lengths
 png('sepal_length.png')
-plot(setosa.sepal.length, col='black', xlab='', ylab='Length (cm)', ylim=c(4.1, 8.1))
-points(versicolor.sepal.length, col='red')
-points(virginica.sepal.length, col='blue')
-legend('bottomright', legend=c('Setosa', 'Versicolor', 'Virginica'), col=c('black', 'red', 'blue'), lty = 1:2, cex = 0.8) 
+plot(setosa.sepal.length, col='blue', xlab='', ylab='Length (cm)', ylim=c(4.1, 8.1))
+points(versicolor.sepal.length, col='green')
+points(virginica.sepal.length, col='red')
+legend('bottomright', legend=c('Setosa', 'Versicolor', 'Virginica'), col=c('blue', 'green', 'red'), lty = 1:2, cex = 0.8) 
 title('Sepal Lengths', line=1)
 dev.off()
 
