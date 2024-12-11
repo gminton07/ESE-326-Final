@@ -13,8 +13,10 @@
 \maketitle
 
 \section{Introduction}
-The maiin objective of this project involoved R's built-in dataset, Iris. Through graphical exploration and mathematical analysis, the researchers determine
-whether there are clear rules as to which of the features determine the species of a given specimen.
+The maiin objective of this project involoved R's built-in dataset, Iris. Through graphical exploration and
+mathematical analysis, the researchers determine
+whether there are clear rules as to which of the features determine the species of a given specimen. Through 
+
 
 
 \color{Aquamarine}
@@ -61,13 +63,9 @@ $\sigma_1 \neq \sigma_2$ T-test using $\gamma$:
 	\label{fig:iris_colored}
 \end{figure}
 
-% box_petal_length.png
-% box_petal_width.png
-% box_sepal_length.png
-% box_sepal_width.png
-
 % Show the feature boxplots together
 \begin{figure}[H]
+    \centering
     \begin{subfigure}{0.375\textwidth}
       \centering
       \includegraphics[width=\linewidth]{box_petal_length.png}
@@ -98,7 +96,13 @@ $\sigma_1 \neq \sigma_2$ T-test using $\gamma$:
 
 Figure~\ref{fig:feature_boxplots_A} is petal length
 
-
+% Show the histogram plot
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{hist_iris.png}
+	\caption{Histograms of Petal lengths and widths for Setosa, Versicolor, and Virginica}
+	\label{fig:hist_iris}
+\end{figure}
 
 \section{Conclusions}
 
