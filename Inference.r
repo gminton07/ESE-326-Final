@@ -48,7 +48,7 @@ par(mfrow = c(1, 1))
 # Part 2
 # **********************
 
-# funciton to calculate the confidence interval on the mean of a normal distribution with an unknown varience
+# function to calculate the confidence interval on the mean of a normal distribution with an unknown variance
 confidence_interval_unknown_variance <- function(sample, confidence = 0.95) {
   n <- length(sample)
   sample_mean <- mean(sample)
