@@ -6,15 +6,13 @@ data(iris)
 summary(iris)
 
 # Split dataset into different species
-#setosa, virginica, versicolor
 names(iris) <- tolower(names(iris))
-setosa <- filter(iris, species == 'setosa')
-virginica <- filter(iris, species == 'virginica')
-versicolor <- filter(iris, species == 'versicolor')
 
 # Colors:
 # Setosa  Versicolor  Virginica
 # Blue    Green       Red
+# Shapes:
+# Circle  Triangle    +
 colors <- c('Setosa'='blue', 'Versicolor'='green', 'Virginica'='red')
 shapes <- c('Setosa'=1,      'Versicolor'=2,       'Virginica'=3)
 

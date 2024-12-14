@@ -1,7 +1,26 @@
 \documentclass{article}
 \usepackage{caption, float, graphicx, subcaption}
 \usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
 \captionsetup[table]{skip=1em}
+
+\lstset{escapeinside={(*@}{@*)}}
+\lstdefinestyle{R}
+{
+	language=R,
+	basicstyle=\small\ttfamily,
+	numbers=left,
+	backgroundcolor=\color{white},
+	frame=single,
+	rulecolor=\color{black},
+	tabsize=1,
+	breaklines=true,
+	breakatwhitespace=false,
+	keywordstyle=\color{Blue},
+	commentstyle=\color{Green},
+	stringstyle=\color{ForestGreen}
+}
+
 
 \title{ESE 326: Final Project}
 \author{Eric Stewart \& Gabriel Minton}
@@ -81,10 +100,10 @@ $\sigma_1 == \sigma_2$ T-test using Sp:
 Figure~\ref{fig:feature_boxplots} depicts the 6 pairings of the four features. These features are petal length, petal width, sepal length, and sepal width. Several images are jumbled together, showing that the species have no statistical difference for that feature. For example, take the Sepal Length column. There is not a distinct horizontal separation between the colored species. This means that the sepal length is roughly the same for each species of iris. Similarly, the Sepal Width column shows that there is not a significant statistical separation between species for that feature.
 The Petal Length subplots show that Versicolor and Virginica are close, but the Setosa points have much smaller values. This could mean that Setosa is statistically smaller than the other two species. This is supported by Figure~\ref{fig:box_petal_length}. Likewise, the Petal Width subplots show the Versicolor and Virginica points very close, though perhaps still statistically different. The Setosa plots definitely have smaller values than those of the Versicolor and Virginica datapoints. The best plot to see these differences is the Petal Length/ Petal Width plot(s), as the blue setosa group is away from the green and red Versicolor and Virginica groups.
 
-The researchers also prepared a set of boxplots (Figure~\ref{fig:feature_boxplots}). As a property of boxplots, the vertical separation represents a statistical difference between samples. Figures~\ref{fig:box_petal_length}~and~\ref{fig:box_petal_width} show a significant amount of difference between the species for Petal Lengths and Petal Widths, respectively. For each of these features, there is a clear separation of the species. Setosa has the smallest petals, with Versicolor and Virginica being larger. As expected, this is the same result as found from Figure~\ref{fig:iris_colored}. The boxes for Sepal Length show the same pattern, though the Versicolor and Virginica boxes have some overlap (Figure~\ref{fig:box_sepal_length}). Figure~\ref{fig_box_sepal_width} changes the previous pattern of Setosa having the smallest features. This subplot also has overlap for all three boxes, meaning there is no statistical difference between species for sepal width. This is reflected in the Sepal Width column of Figure~\ref{fig:iris_colored}, where all three species populate the same horizontal region.
+The researchers also prepared a set of boxplots (Figure~\ref{fig:feature_boxplots}). As a property of boxplots, the vertical separation represents a statistical difference between samples. Figures~\ref{fig:box_petal_length}~and~\ref{fig:box_petal_width} show a significant amount of difference between the species for Petal Lengths and Petal Widths, respectively. For each of these features, there is a clear separation of the species. Setosa has the smallest petals, with Versicolor and Virginica being larger. As expected, this is the same result as found from Figure~\ref{fig:iris_colored}. The boxes for Sepal Length show the same pattern, though the Versicolor and Virginica boxes have some overlap (Figure~\ref{fig:box_sepal_length}). Figure~\ref{fig:box_sepal_width} changes the previous pattern of Setosa having the smallest features. This subplot also has overlap for all three boxes, meaning there is no statistical difference between species for sepal width. This is reflected in the Sepal Width column of Figure~\ref{fig:iris_colored}, where all three species populate the same horizontal region.
 
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.75\textwidth]{iris_colored.png}
 	\caption{A visualization of the Iris dataset showing scatterplots of each pair
@@ -93,7 +112,7 @@ The researchers also prepared a set of boxplots (Figure~\ref{fig:feature_boxplot
 \end{figure}
 
 % Show the feature boxplots together
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}{0.375\textwidth}
 		\centering
@@ -138,6 +157,7 @@ The researchers also prepared a set of boxplots (Figure~\ref{fig:feature_boxplot
 
 \section{Conclusions}
 
+\color{black}
 \newpage
 \section{Appendix}
 
@@ -145,15 +165,277 @@ The researchers also prepared a set of boxplots (Figure~\ref{fig:feature_boxplot
 \subsection{R-scripts}
 \subsubsection{Exploratory.r}
 
-contents of file...
+\begin{lstlisting}[style=R]
+# Load packages
+library(dplyr)
 
-..
+# Load data
+data(iris)
+summary(iris)
 
-..
+# Split dataset into different species
+names(iris) <- tolower(names(iris))
 
-..
+# Colors:
+# Setosa  Versicolor  Virginica
+# Blue    Green       Red
+# Shapes:
+# Circle  Triangle    +
+colors <- c('Setosa'='blue', 'Versicolor'='green', 'Virginica'='red')
+shapes <- c('Setosa'=1,      'Versicolor'=2,       'Virginica'=3)
+
+# *********************
+# PART 1: Plots
+# *********************
+
+# IRIS Template
+png('iris_gray.png')
+plot(iris)
+dev.off()
+
+## IRIS Colors
+png('iris_colored.png', width = 800, height = 640)
+#title()
+par(mfrow=c(4, 5), mar=c(2, 2, 2, 2))
+plot(x = 0:10, y = 0:10, ann=F, bty='o', type='n', xaxt='n', yaxt='n')
+text(x = 5, y = 5, 'Petal Length', cex=2)
+plot(iris$petal.width, iris$petal.length, col=colors[iris$species], pch=shapes[iris$species])
+plot(iris$sepal.length, iris$petal.length, col=colors[iris$species], pch=shapes[iris$species])
+plot(iris$sepal.width, iris$petal.length, col=colors[iris$species], pch=shapes[iris$species])
+plot(x = 0:10, y = 0:10, ann=F, bty='n', type='n', xaxt='n', yaxt='n')
+
+plot(iris$petal.length, iris$petal.width, col=colors[iris$species], pch=shapes[iris$species])
+plot(x = 0:10, y = 0:10, ann=F, bty='o', type='n', xaxt='n', yaxt='n')
+text(x = 5, y = 5, 'Petal Width', cex=2)
+plot(iris$sepal.length, iris$petal.width, col=colors[iris$species], pch=shapes[iris$species])
+plot(iris$sepal.width, iris$petal.width, col=colors[iris$species], pch=shapes[iris$species])
+plot(x = 0:10, y = 0:10, ann=F, bty='n', type='n', xaxt='n', yaxt='n')
+
+
+plot(iris$petal.length, iris$sepal.length, col=colors[iris$species], pch=shapes[iris$species])
+plot(iris$petal.width, iris$sepal.length, col=colors[iris$species], pch=shapes[iris$species])
+plot(x = 0:10, y = 0:10, ann=F, bty='o', type='n', xaxt='n', yaxt='n')
+text(x = 5, y = 5, 'Sepal Length', cex=2)
+plot(iris$sepal.width, iris$sepal.length, col=colors[iris$species], pch=shapes[iris$species])
+plot(x = 0:10, y = 0:10, ann=F, bty='n', type='n', xaxt='n', yaxt='n')
+
+plot(iris$petal.length, iris$sepal.width, col=colors[iris$species], pch=shapes[iris$species])
+plot(iris$petal.width, iris$sepal.width, col=colors[iris$species], pch=shapes[iris$species])
+plot(iris$sepal.length, iris$sepal.width, col=colors[iris$species], pch=shapes[iris$species])
+plot(x = 0:10, y = 0:10, ann=F, bty='o', type='n', xaxt='n', yaxt='n')
+text(x = 5, y = 5, 'Sepal Width', cex=2)
+plot(x = 0:10, y = 0:10, ann=F, bty='n', type='n', xaxt='n', yaxt='n')
+
+legend('bottom', legend=c('Setosa', 'Versicolor', 'Virginica'), col=colors, pch=shapes, cex = 2)
+dev.off()
+
+
+# *********************
+# PART 2: Boxplots
+# *********************
+
+# Sepal Length
+png('box_sepal_length.png')
+boxplot(sepal.length ~ species, data=iris, col=colors,
+        main='Boxplot of Sepal Lengths', xlab='Species', ylab='Sepal Length (cm)')
+dev.off()
+
+
+# Sepal Width
+png('box_sepal_width.png')
+boxplot(sepal.width ~ species, data=iris, col=colors,
+        main='Boxplot of Sepal Widths',
+        xlab='Species', ylab='Sepal Width (cm)')
+dev.off()
+
+# Petal Length
+png('box_petal_length.png')
+boxplot(petal.length ~ species, data=iris, col=colors,
+        main='Boxplot of Petal Lengths',
+        xlab='Species', ylab='Petal Length (cm)')
+dev.off()
+
+# Petal Width
+png('box_petal_width.png')
+boxplot(petal.width ~ species, data=iris, col=colors,
+        main='Boxplot of Petal Widths',
+        xlab='Species', ylab='Petal Width (cm)')
+dev.off()
+\end{lstlisting}
+
 
 \subsubsection{Inference.r}
+\begin{lstlisting}[style=R]
+data(iris)
+
+# **********************
+# Part 1
+# **********************
+
+# create graph layout
+par(mfrow = c(2, 3))
+
+# petal length histograms
+
+# setosa histogram
+hist(iris$Petal.Length[iris$Species == "setosa"],
+     main = "Setosa", xlab = "Petal Length", col = "blue",
+     breaks = 5, xlim = c(0,3))
+
+# versicolor
+hist(iris$Petal.Length[iris$Species == "versicolor"],
+     main = "Versicolor", xlab = "Petal Length", col = "green",
+     breaks = 10, xlim = c(2,6))
+
+# virginica
+hist(iris$Petal.Length[iris$Species == "virginica"],
+     main = "Virginica", xlab = "Petal Length", col = "red",
+     breaks = 10, xlim = c(4,7))
+
+# petal width histograms
+
+# setosa
+hist(iris$Petal.Width[iris$Species == "setosa"],
+     main = "Setosa", xlab = "Petal Width", col = "blue",
+     breaks = 10, xlim = c(0,1))
+
+# versicolor
+hist(iris$Petal.Width[iris$Species == "versicolor"],
+     main = "Versicolor", xlab = "Petal Width", col = "green",
+     breaks = 10, xlim = c(0,2.5))
+
+# virginica
+hist(iris$Petal.Width[iris$Species == "virginica"],
+     main = "Virginica", xlab = "Petal Width", col = "red",
+     breaks = 10, xlim = c(0,2.5))
+
+# Reset layout
+par(mfrow = c(1, 1))
+
+# **********************
+# Part 2
+# **********************
+
+# function to calculate the confidence interval on the mean of a normal distribution with an unknown variance
+confidence_interval_unknown_variance <- function(sample, confidence = 0.95) {
+  n <- length(sample)
+  sample_mean <- mean(sample)
+  sample_sd <- sd(sample)
+  a <- 1-confidence
+  t <- qt(1-a/2, n-1)
+  z <- t*sample_sd/sqrt(n)
+  lower_bound <- sample_mean - z
+  upper_bound <- sample_mean + z
+  return(c(lower_bound, upper_bound))
+}
+
+# calculate the confidence interval using the function
+setosa_ci <- confidence_interval_unknown_variance(iris$Petal.Length[iris$Species == "setosa"])
+versicolor_ci <- confidence_interval_unknown_variance(iris$Petal.Length[iris$Species == "versicolor"])
+virginica_ci <- confidence_interval_unknown_variance(iris$Petal.Length[iris$Species == "virginica"])
+
+# print results
+print("Confidence Interval for Petal Length (Setosa):")
+cat('Lower Bound:', setosa_ci[1], "\n")
+cat('Upper Bound:', setosa_ci[2], "\n")
+
+print("Confidence Interval for Petal Length (Versicolor):")
+cat('Lower Bound:', versicolor_ci[1], "\n")
+cat('Upper Bound:', versicolor_ci[2], "\n")
+
+print("Confidence Interval for Petal Length (Verginica):")
+cat('Lower Bound:', virginica_ci[1], "\n")
+cat('Upper Bound:', virginica_ci[2], "\n")
+
+# # **********************
+# # Part 5
+# # **********************
+# 
+# 
+# # function to preform a hypothesis on two samples
+# mean_hypothesis_test <- function(sample1, sample2, conf_level = 0.95) {
+# 
+#   n1 <- length(sample1)       # size of sample1
+#   n2 <- length(sample2)       # size of sample2
+#   mean1 <- mean(sample1)      # sample mean for sample1
+#   mean2 <- mean(sample2)      # sample mean for sample2
+#   sd1 <- sd(sample1)          # sample sd for sample1
+#   sd2 <- sd(sample2)          # sample sd for sample2
+# 
+### check for equality in variances by testing (*@ H0: $\sigma_1 = \sigma_2$: H1: $\sigma_1 \neq \sigma_2$ @*)
+# }
+
+# **********************
+# Part 6
+# **********************
+
+sample1 = iris$Petal.Length[iris$Species == "virginica"]
+sample2 = iris$Petal.Length[iris$Species == "versicolor"]
+conf_level <- 0.95
+
+
+mean_hypothesis_test <- function(sample1, sample2, conf_level = 0.95) {
+  n1 <- length(sample1)       # size of sample1
+  n2 <- length(sample2)       # size of sample2
+  mean1 <- mean(sample1)      # sample mean for sample1
+  mean2 <- mean(sample2)      # sample mean for sample2
+  sd1 <- sd(sample1)          # sample sd for sample1
+  sd2 <- sd(sample2)          # sample sd for sample2
+  
+  ### check for equality in variances by testing (*@ H0: $\sigma_1 = \sigma_2$: H1: $\sigma_1 \neq \sigma_2$ @*)
+  # test statistic
+  t_stat <- (sd1^2)/(sd2^2)
+  # significance level
+  alpha <- 1 - conf_level
+  # p value
+  p_value <- 2*(1-pf(t_stat,n1,n2))
+  
+  # sigma values are unknown and equal
+  if (p_value > alpha) {
+    print(" (*@ $\sigma_1~=\sigma_2$ @*) ")
+    # degrees of freedom
+    df <- n1 + n2 - 2
+    # pooled valiance
+    Sp <- ((n1-1)*sd1^2 + (n2-1)*sd2^2)/(n1 + n2 - 2)
+    # observed value
+    T_obs <- (mean1 - mean2)/(sqrt(Sp*((1/n1) + (1/n2))))
+    # p value
+    pt_value <- pt(T_obs, df)
+    
+    # sigma values are unknown and unequal
+  } else if (p_value < alpha) {
+    print(" (*@ $\sigma_1~=\sigma_2$ @*) ")
+    # degree of freedom
+    gamma <- (((sd1^2/n1) + (sd2^2/n2))^2) / (((sd1^2/n1)^2 / (n1 - 1)) + ((sd2^2/n2)^2 / (n2 - 1)))
+    # observed value
+    T_obs <- (mean1 - mean2)/(sqrt(((sd1^2/n1) + (sd2^2/n2))))
+    # p value
+    pt_value <- pt(T_obs, gamma)
+    
+  }
+  
+  print('p value final')
+  print(pt_value)
+  if (pt_value > alpha) {
+    result <- "Accept H0"
+  } else if (pt_value < alpha) {
+    result <- "Reject H0"
+  }
+  return(result)
+}
+    
+first_test <- mean_hypothesis_test(iris$Petal.Length[iris$Species == "virginica"],
+                              iris$Petal.Length[iris$Species == "versicolor"],
+                              0.95)
+second_test <- mean_hypothesis_test(iris$Petal.Length[iris$Species == "versicolor"],
+                                   iris$Petal.Length[iris$Species == "setosa"],
+                                   0.95)
+print("Petal length of Virginica iris is larger than that of Versicolor")
+print(first_test)
+print("Petal length of Versicolor iris is larger than that of Setosa")
+print(second_test)
+
+\end{lstlisting}
 
 
 \end{document}
