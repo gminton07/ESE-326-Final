@@ -2,7 +2,7 @@
 \usepackage{caption, float, graphicx, subcaption}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{listings}
-\captionsetup[table]{skip=1em}
+\setlength{\parskip}{0.4em}
 \usepackage[margin=1in]{geometry}
 
 \lstset{escapeinside={(*@}{@*)}}
@@ -33,11 +33,6 @@
 \maketitle
 \tableofcontents
 
-\color{red}
-\vskip 1em
-!!! All content must end on page 6 !!!
-\color{black}
-
 \newpage
 
 \section{Introduction}
@@ -50,11 +45,6 @@ given specimen. Through these two forms of analysis, the researchers will show i
 \section{Methods}
 
 \subsection{Exploratory Analysis}
-% explain how to do analysis and what it will show 
-%Section 2: Methods (general description on the methods used to carry out exploratory data
-%analysis, confidence interval estimate, and hypothesis test).
-%Section 3: Results and Observations (present the results obtained in the form of tables and
-%figures)
 
 Exploratory data analysis is meant for betterunderstanding and visualizing the data. This will also allow for researchers to form hypotheses and find patterns. Later in this report, these patterns will be proven or disproven given the evidence found from the mathematical Inference analysis.
 
@@ -73,7 +63,7 @@ After establishing that the sample means follow a normal distribution, the confi
 
 \subsection{Hypothesis Test}
 
-The next step was to use a hypothesis test to compare the means of two population samples. Since the variance is unknown for each population, the test for equality of variances was conducted first using a p-value test on an f-distribution. If the variances are found to be equal ($\sigma_1 = \sigma_2$), a pooled variance is used as seen in Eq. \ref{eq:pool_sample_variance}.
+The next step was to use a hypothesis test to compare the means of two population samples. Since the variance is unknown for each population, the test for equality of variances was conducted first using a p-value test on an F-distribution. If the variances are found to be equal ($\sigma_1 = \sigma_2$), a pooled sample variance is used as seen in Eq. \ref{eq:pool_sample_variance}.
 
 \begin{equation}
 	{S_p}^2 = \frac{(n_1 - 1) {S_1}^2 + (n_2 -1) {S_2}^2}{n_1 + n_2 -2}
@@ -105,7 +95,7 @@ When the variances of the two populations are unequal, the degrees of freedom ($
 	\label{eq:gamma_unequal}
 \end{equation}
 
-After calculating the appropriate test statistic for the hypthesis test, the next step is to determine to reject or fail to reject the null hypothesis. The p-value test was used for this decision. If the p-value is less than the significance level $\alpha$, the null hypthesis is rejected. If the p-value is greater than or equal to the signaificance level $\alpha$, the null hypothesis is not rejected.
+After calculating the appropriate test statistic for the hypothesis test, the next step is to determine to reject or fail to reject the null hypothesis. The p-value test was used for this decision. If the p-value is less than the significance level $\alpha$, the null hypthesis is rejected. If the p-value is greater than or equal to the significance level $\alpha$, the null hypothesis is not rejected.
 
 \section{Results and Observations}
 \subsection{Exploratory Analysis}
@@ -159,7 +149,7 @@ The researchers also prepared a set of boxplots (Figure~\ref{fig:feature_boxplot
 
 \subsection{Inference Analysis}
 
-The analysis begins with visualizing the distributations of the petal length and petal width using histograms. This allows for an initial assessment of the underlying patters and potential differences betweent the groups before performing statistical tests. Similar to the exploritory analysis, it is noticable in Figure \ref {fig:hist_iris} that the virginica species has a larger petal legnth and width with a approximant mean of 5.5 cm and 2 cm respectively. The results also show that the setosa species has the smallest petal length and withd with sample means at 1.5 and 0.2 respectively. 
+The analysis begins with visualizing the distributions of the petal length and petal width using histograms. This allows for an initial assessment of the underlying patterns and potential differences between the groups before performing statistical tests. Similar to the exploratory analysis, it is noticable in Figure \ref {fig:hist_iris} that the virginica species has a larger petal length and width with an approximate mean of 5.5 cm and 2 cm respectively. The results also show that the setosa species has the smallest petal length and width with sample means at 1.5 and 0.2 respectively. 
 
 % Show the histogram plot
 \begin{figure}[H]
@@ -172,7 +162,7 @@ The analysis begins with visualizing the distributations of the petal length and
 
 The 95\% confidence intervals for the petal lengths of the three iris species were calculated to estimate the population mean for each species. The confidence intervals for petal length were [1.41, 1.51] cm for the Setosa species, [4.13, 4.39] cm for the Versicolor species, and [5.4, 5.7] cm for the Virginica species. These intervals indicate that the petal lengths of each species are distinct from one another, as there is no overlap between the intervals. Although the intervals provide an estimate of the population mean for each species at a 95\% confidence level, they do not conclusively confirm whether the populations are significantly different. A formal hypothesis test would be necessary to make this determination.
 
-Since the population standard devaition ($\sigma$) was unknown for the iris species, a test was conducted to determine whether the variances of the two samples were equal, using a significance level of 0.05. The result of this variance equality test determined the appropriate t-distribution for the subsequent hypothesis test. For the first hypothesis test, the null hypothesis  ($H_0$) stated that the petal length of Virginica iris is larger than or equal to that of Versicolor. The alternative hypothesis ($H_1$) stated that the petal length of Versicolor iris is larger than that of Virginica. The p-value for the variance equality test was 0.259, which greater than the significance level ($\alpha = 0.05$), indicating that it is reasonable to assume the variances of the two populations are equal. Based on this result the t-distribution for the hypothesis test used the pooled vairance, as given in Eq. \ref{eq:t-test_equal}. The resulting p-value for this hypothesis test was 1, indicating that there is no evidence to reject the null hypothesis with a significance value of 0.05. Therefore, it cannot be concluded that the petal length of Versicolor iris is larger than that of Virginica.
+Since the population standard deviation ($\sigma$) was unknown for the iris species, a test was conducted to determine whether the variances of the two samples were equal, using a significance level of 0.05. The result of this variance equality test determined the appropriate t-distribution for the subsequent hypothesis test. For the first hypothesis test, the null hypothesis  ($H_0$) stated that the petal length of Virginica iris is larger than or equal to that of Versicolor. The alternative hypothesis ($H_1$) stated that the petal length of Versicolor iris is larger than that of Virginica. The p-value for the variance equality test was 0.259, which greater than the significance level ($\alpha = 0.05$), indicating that it is reasonable to assume the variances of the two populations are equal. Based on this result the t-distribution for the hypothesis test used the pooled vairance, as given in Eq. \ref{eq:t-test_equal}. The resulting p-value for this hypothesis test was 1, indicating that there is no evidence to reject the null hypothesis with a significance value of 0.05. Therefore, it cannot be concluded that the petal length of Versicolor iris is larger than that of Virginica.
 
  For the second hypothesis test, the null hypothesis ($H_0$) stated that the petal length of Versicolor iris is larger than or equal to that of Setosa iris, while the alternative hypothesis ($H_1$) stated that the petal length of Setosa iris is larger than that of Versicolor. The test for variance equality resulted in a p-value of $6.6\times10^{-11}$, indicating that the variances of the two populations are not equal. As a result, the t-distribution used the test statistic for unequal variances, as described in Eq. \ref{eq:t-test_unequal}. The final p-value for this hypothesis test was 1, showing no evidence to reject the null hypothesis with a significance value of 0.05. Therefore, it cannot be concluded that the petal length of Setosa iris is larger than that of Versicolor. These results align with the exploratory analysis and confidence interval findings, which also indicated differenes in petal lengths among species but did not provide evidence to support the specific claims tested in these hypothesis tests. 
 
@@ -182,7 +172,6 @@ Since the population standard devaition ($\sigma$) was unknown for the iris spec
 \newpage
 \section{Appendix}
 
-\subsection{Extra Figures and Tables} 
 \subsection{R-scripts}
 \subsubsection{Exploratory.r}
 
